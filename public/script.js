@@ -16,7 +16,10 @@ const getAllTask = async() => {
             return `
                 <div class="thread" data-task-id = "${_id}" value="${title}">
                     <div class="group">
-                        <i class='bx bx-check-circle'></i>
+                        <label class="checkbox">
+                            <input type="checkbox" />
+                            <span class="checkmark"></span>
+                        </label>
                         <h3>${title}</h3>
                     </div>
                     <div class="items">
