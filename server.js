@@ -42,14 +42,20 @@ app.post("/todo/task", async(req, res) => {
 app.delete("/todo/task/:id", async(req, res) => {
     try {
         const { id } = req.params;
-        const deletedTask = await toDo.findByIdAndDelete(id);
+        const isValid = await toDo.find({id});
+        if (isValid) {
+            const deletedTask = await toDo.deleteOne({_id: id});
 
-        if (!deletedTask) {
-            return res.status(404).json({message: "Task not found"});
+            if (!deletedTask) {
+                return res.status(404).json({message: "Task not found"});
+            }
+
+            res.status(200).json({message: "Successfully deleted the task", deletedTask});
+            console.log("Successfully deleted item from MongoDB!!");
         }
-
-        res.status(200).json({message: "Successfully deleted the task", deletedTask});
-        console.log("Successfully deleted item from MongoDB!!");
+        else {
+            console.log("Failed delete the item from MongoDB");
+        }
     } catch(err) {
         res.status(500).send(err);
     }

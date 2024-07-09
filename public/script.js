@@ -3,7 +3,6 @@ const inputTaskDOM = document.getElementById("inputTitle");
 const formDOM = document.querySelector(".form-section");
 const deleteTaskDOM = document.getElementById("trash");
 let inputTask = "";
-
 // console.log(axios);
 const getAllTask = async() => {
     try {
@@ -20,7 +19,6 @@ const getAllTask = async() => {
                     <div class="group">
                         <i class='bx bx-check-circle'></i>
                         <h3>${title}</h3>
-                        <p>${_id}</p>
                     </div>
                     <div class="edit-items">
                         <a href="#"><i class='bx bxs-edit' ></i></a>
@@ -30,6 +28,16 @@ const getAllTask = async() => {
             `;
         }).join("");
         taskSectionDOM.innerHTML = allTask;
+        
+        // delete
+        // const deleteButtons = document.querySelectorAll(".trash");
+        // deleteButtons.forEach(button => {
+        //     button.addEventListener("click", async (event) => {
+        //         event.preventDefault();
+        //         const taskId = event.target.closest("a").getAttribute("data-task-id");
+        //         await deleteTask(taskId);
+        //     });
+        // });
     } catch (err) {
         console.log(err);
     }
@@ -59,34 +67,25 @@ formDOM.addEventListener("submit", async(event) => {
 });
 
 // delete
-// deleteTaskDOM.addEventListener("change", async(event) => {
-//     // console.log("data-task-id");
-//     console.log("Thank you!!");
-//     // if (event.target.closest(".trash")) {
-//     //     event.preventDefault();
-//     //     const taskElement = event.target.closest(".thread");
-//     //     const taskId = task.Element.getAttribute("data-task-id");
-//     //     // console.log("data-task-id");
-//     //     try {
-//     //         await axios.delete(`/todo/task/delete/${taskId}`);
-//     //         getAllTask();
-//     //     } catch(err) {
-//     //         console.log(err);
-//     //     }
-//     // }
-// });
-
-document.addEventListener("click", async(event) => {
-    const deleteIcon = event.target.closest(".trash");
-    if (deleteIcon) {
-        event.preventDefault();
-        // console.log("successfully deleted items from MongoDB!");
-        const taskId = deleteIcon.getAttribute("data-task-id");
+taskSectionDOM.addEventListener("click", async(event) => {
+    if (event.target.closest(".edit-items").querySelector("#trash")) {
         try {
-            await axios.delete(`/todo/task/${taskId}`);
-            getAllTask();
+            event.preventDefault();
+            const taskElement = event.target.closest(".edit-items").querySelector("#trash");
+            const taskId = taskElement.getAttribute("data-task-id");
+            // console.log(taskId);
+            await deleteTask(taskId);
         } catch (err) {
             console.log(err);
         }
     }
-})
+});
+
+const deleteTask = async(id) => {
+    try {
+        await axios.delete(`/todo/task/${id}`);
+        getAllTask();
+    } catch(err) {
+        console.log(err);
+    }
+};
