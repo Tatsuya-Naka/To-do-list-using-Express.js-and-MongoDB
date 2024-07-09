@@ -103,19 +103,23 @@ a {
     visibility: hidden;
 }
 
-.threads .thread .edit-items {
+.threads .thread .items {
     display: flex;
     align-items: center;
     padding: 5px 10px;
     gap: 5px;
 }
 
-.edit-items a {
+/* .items a {
+    cursor: pointer;
+    color: #5dca88;
+} */
+
+.edit-items #edit {
     cursor: pointer;
     color: #5dca88;
 }
-
-.edit-items .bxs-trash {
+.trash-items #trash {
     cursor: pointer;
     color: blue;
 }

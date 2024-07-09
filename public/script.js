@@ -1,7 +1,6 @@
 const taskSectionDOM = document.querySelector(".threads");
 const inputTaskDOM = document.getElementById("inputTitle");
 const formDOM = document.querySelector(".form-section");
-const deleteTaskDOM = document.getElementById("trash");
 let inputTask = "";
 // console.log(axios);
 const getAllTask = async() => {
@@ -20,24 +19,18 @@ const getAllTask = async() => {
                         <i class='bx bx-check-circle'></i>
                         <h3>${title}</h3>
                     </div>
-                    <div class="edit-items">
-                        <a href="#"><i class='bx bxs-edit' ></i></a>
-                        <a href="#" id="trash" data-task-id="${_id}"><i class='bx bxs-trash'></i></a>
+                    <div class="items">
+                        <form class="edit-items">
+                            <a href="#" id="edit"><i class='bx bxs-edit' ></i></a>
+                        </form>
+                        <form class="trash-items">
+                            <a href="#" id="trash"><i class='bx bxs-trash'></i></a>
+                        </form>
                     </div>
                 </div>
             `;
         }).join("");
         taskSectionDOM.innerHTML = allTask;
-        
-        // delete
-        // const deleteButtons = document.querySelectorAll(".trash");
-        // deleteButtons.forEach(button => {
-        //     button.addEventListener("click", async (event) => {
-        //         event.preventDefault();
-        //         const taskId = event.target.closest("a").getAttribute("data-task-id");
-        //         await deleteTask(taskId);
-        //     });
-        // });
     } catch (err) {
         console.log(err);
     }
@@ -68,15 +61,20 @@ formDOM.addEventListener("submit", async(event) => {
 
 // delete
 taskSectionDOM.addEventListener("click", async(event) => {
-    if (event.target.closest(".edit-items").querySelector("#trash")) {
-        try {
+    const target = event.target;
+    if (target.closest("#edit")) {
+        const thread = target.closest(".thread");
+        const taskId = thread.getAttribute("data-task-id");
+        if (taskId) {
+            console.log("Edit task ID: ", taskId);
+        }
+    }
+    if (target.closest("#trash")) {
+        const thread = target.closest(".thread");
+        const taskId = thread.getAttribute("data-task-id");
+        if (taskId) {
             event.preventDefault();
-            const taskElement = event.target.closest(".edit-items").querySelector("#trash");
-            const taskId = taskElement.getAttribute("data-task-id");
-            // console.log(taskId);
             await deleteTask(taskId);
-        } catch (err) {
-            console.log(err);
         }
     }
 });
