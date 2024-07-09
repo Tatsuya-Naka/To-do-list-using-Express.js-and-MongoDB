@@ -14,7 +14,7 @@ const getAllTask = async() => {
             console.log(title);
             console.log(_id);
             return `
-                <div class="thread" data-task-id = "${_id}">
+                <div class="thread" data-task-id = "${_id}" value="${title}">
                     <div class="group">
                         <i class='bx bx-check-circle'></i>
                         <h3>${title}</h3>
@@ -65,9 +65,9 @@ taskSectionDOM.addEventListener("click", async(event) => {
     if (target.closest("#edit")) {
         const thread = target.closest(".thread");
         const taskId = thread.getAttribute("data-task-id");
-        if (taskId) {
-            console.log("Edit task ID: ", taskId);
-        }
+        const taskTitle = thread.getAttribute("value");
+        
+        editTask(taskId, taskTitle);
     }
     if (target.closest("#trash")) {
         const thread = target.closest(".thread");
@@ -86,4 +86,13 @@ const deleteTask = async(id) => {
     } catch(err) {
         console.log(err);
     }
+};
+
+//Edit 
+const editTask = async(id, title) => {
+    console.log("Edit task ID: ", id);
+    console.log("Title: ", title);
+    // localStorage.setItem('editTaskId', id);
+    localStorage.setItem('editTaskTitle', title);
+    window.location.href = `./edit.html?id=${id}`
 };

@@ -27,6 +27,21 @@ app.get("/todo/all", async(req, res) => {
     }
 });
 
+app.get("/todo/task/:id", async(req, res) => {
+    try {
+        const {id} = req.params;
+        // const {title} = req.body;
+        const task = await toDo.findOne({_id: id});
+        if (!task) {
+            return res.status(404).json({error: "Task not found"});
+        }
+        res.status(200).json({title: task.title});
+        console.log("Successfully fetched task from MongoDB!", task.title);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 // post
 app.post("/todo/task", async(req, res) => {
     try {
@@ -58,6 +73,28 @@ app.delete("/todo/task/:id", async(req, res) => {
         }
     } catch(err) {
         res.status(500).send(err);
+    }
+});
+
+//put 
+app.put("/todo/task/update/:id", async(req, res) => {
+    try {
+        const {id} = req.params;
+        const {title} = req.body;
+
+        if (!title) {
+            return res.status(400).json({error: "Title not found"});
+        }
+        
+        const updatedTask = await toDo.findByIdAndUpdate(id, {title}, {new: true});
+        if (!updatedTask) {
+            return res.status(400).json({error: "Title not found"});
+        }
+
+        res.status(200).json(updatedTask);
+        console.log("Successfully updated this item to MongoDB!", updatedTask);
+    } catch (err) {
+        console.log(err);
     }
 });
 
