@@ -1,6 +1,6 @@
 I created a simple to-do list to understand APIs using Express.js, Axios, and MongoDB. If you would like to use this to-do list locally, please download these files and visit 'localhost:3000' in your browser.
 
-![screenshot](./discription/screenshot.png)
+![screenshot](./screenshot.png)
 
 There are 6 functions overall.
 1. Post an item and show this result
