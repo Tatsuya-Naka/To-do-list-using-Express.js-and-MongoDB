@@ -5,4 +5,4 @@ I created a simple to-do list to understand APIs using Express.js, Axios, and Mo
 There are 6 functions overall.
 1. Post an item and show this result
    As long as you put your plan into an text and push the button, you will be able to see an updated to-do list soon. You can try it again and again.
-   ![postMethod](./modifiedSRC/"post command".mov)
+   ![postMethod](.modifiedSRC/post command.mp4)
