@@ -64,6 +64,7 @@ a {
     color: white;
     opacity: 0.8;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .form-section button:hover {
@@ -243,4 +244,33 @@ a {
     width: 100%;
     align-items: center;
     display: flex;
+}
+
+.create-todo .delete-all {
+    width: 70%;
+    padding-top: 30px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.delete {
+    background-color: #7075d8;
+    padding: 8px 30px;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 7px #322dad;
+    color: #fff;
+    opacity: .7;
+}
+
+.delete:hover {
+    opacity: 1;
+}
+
+.delete:active {
+    box-shadow: none;
+    position: relative;
+    top: 7px;
 }

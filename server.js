@@ -80,6 +80,21 @@ app.delete("/todo/task/:id", async(req, res) => {
     }
 });
 
+// delete all
+app.delete("/todo/task/delete/all", async(req, res) => {
+    try {
+        const deleteAllTask = await toDo.deleteMany({});
+        if (!deleteAllTask) {
+            return res.status(404).json({message: "Task not found"});
+        }
+
+        res.status(200).json({message: "Successfully deleted all tasks from MongoDB!", deleteAllTask});
+        console.log("Successfully deleted all tasks from MongoDB!");
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 //put 
 app.put("/todo/task/update/:id", async(req, res) => {
     try {

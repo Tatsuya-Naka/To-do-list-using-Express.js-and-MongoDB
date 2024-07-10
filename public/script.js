@@ -1,6 +1,7 @@
 const taskSectionDOM = document.querySelector(".threads");
 const inputTaskDOM = document.getElementById("inputTitle");
 const formDOM = document.querySelector(".form-section");
+const deleteAllDOM = document.querySelector(".delete-all");
 let inputTask = "";
 
 // console.log(axios);
@@ -81,11 +82,20 @@ taskSectionDOM.addEventListener("click", async(event) => {
         const thread = target.closest(".thread");
         const taskId = thread.getAttribute("data-task-id");
         if (taskId) {
-            event.preventDefault();
+            // event.preventDefault();
             await deleteTask(taskId);
         }
     }
 });
+
+//delete all
+deleteAllDOM.addEventListener("click", async(event) => {
+    const target = event.target;
+    if (target.closest(".delete")) {
+        await axios.delete('/todo/task/delete/all');
+        getAllTask();
+    }
+})
 
 const deleteTask = async(id) => {
     try {
