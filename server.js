@@ -35,8 +35,12 @@ app.get("/todo/task/:id", async(req, res) => {
         if (!task) {
             return res.status(404).json({error: "Task not found"});
         }
-        res.status(200).json({title: task.title});
+        res.status(200).json({
+            title: task.title,
+            timeStamp: task.timeStamp,
+        });
         console.log("Successfully fetched task from MongoDB!", task.title);
+        console.log("Previous modified date: ", task.timeStamp);
     } catch (err) {
         console.log(err);
     }
@@ -80,19 +84,23 @@ app.delete("/todo/task/:id", async(req, res) => {
 app.put("/todo/task/update/:id", async(req, res) => {
     try {
         const {id} = req.params;
-        const {title} = req.body;
+        const {title, time} = req.body;
 
         if (!title) {
             return res.status(400).json({error: "Title not found"});
         }
         
-        const updatedTask = await toDo.findByIdAndUpdate(id, {title}, {new: true});
+        const updatedTask = await toDo.findByIdAndUpdate(id, {
+            title,
+            timeStamp: new Date(),
+        }, {new: true});
         if (!updatedTask) {
             return res.status(400).json({error: "Title not found"});
         }
 
         res.status(200).json(updatedTask);
         console.log("Successfully updated this item to MongoDB!", updatedTask);
+        // console.log(time);
     } catch (err) {
         console.log(err);
     }

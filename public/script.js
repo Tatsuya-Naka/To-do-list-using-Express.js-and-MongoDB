@@ -10,11 +10,12 @@ const getAllTask = async() => {
         let {data} = allTask;
         
         allTask = data.map((task) => {
-            const {_id, title} = task;
+            const {_id, title, timeStamp} = task;
             console.log(title);
             console.log(_id);
+            console.log(timeStamp);
             return `
-                <div class="thread" data-task-id = "${_id}" value="${title}">
+                <div class="thread" data-task-id = "${_id}" value="${title}" data-timestamp="${timeStamp}">
                     <div class="group">
                         <label class="checkbox">
                             <input type="checkbox" />
@@ -69,8 +70,9 @@ taskSectionDOM.addEventListener("click", async(event) => {
         const thread = target.closest(".thread");
         const taskId = thread.getAttribute("data-task-id");
         const taskTitle = thread.getAttribute("value");
+        const timeStamp = thread.getAttribute("data-timestamp")
         
-        editTask(taskId, taskTitle);
+        editTask(taskId, taskTitle, timeStamp);
     }
     if (target.closest("#trash")) {
         const thread = target.closest(".thread");
@@ -92,10 +94,28 @@ const deleteTask = async(id) => {
 };
 
 //Edit 
-const editTask = async(id, title) => {
-    console.log("Edit task ID: ", id);
-    console.log("Title: ", title);
-    // localStorage.setItem('editTaskId', id);
-    localStorage.setItem('editTaskTitle', title);
-    window.location.href = `./edit.html?id=${id}`
+const editTask = async(id, title, time) => {
+    try {
+        console.log("Edit task ID: ", id);
+        console.log("Title: ", title);
+        console.log("Timestamp: ", time);
+
+        const response = await fetch(`/todo/task/update/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, time }),
+        });
+
+        if(!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const updatedTask = await response.json();
+        console.log('Updated Task: ', updatedTask);
+        window.location.href = `./edit.html?id=${id}`;
+    } catch (error) {
+        console.error('Error updating task: ', error);
+    }
 };

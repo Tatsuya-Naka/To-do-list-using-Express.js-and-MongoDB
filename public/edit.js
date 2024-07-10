@@ -1,3 +1,23 @@
+const dataSectionDOM = document.querySelector(".fixed-date");
+
+const getPastDate = async(timeStamp) => {
+    try {
+        const data = new Date(timeStamp);
+        const year = data.getFullYear();
+        const month = data.getMonth() + 1;
+        const date = data.getDate();
+        const hours = data.getHours();
+        const minutes = data.getMinutes();
+
+        let taskHTML = `
+            <p id="fixedDate">${date}/${month}/${year} ${hours}:${minutes}</p>
+        `;
+        dataSectionDOM.innerHTML = taskHTML;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     const taskId = getQueryParam('id');
 
@@ -18,13 +38,19 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const populateForm = (task) => {
         document.getElementById('taskTitle').value = task.title;
+        getPastDate(task.timeStamp);
     };
 
     const handleSubmit = async(event) => {
         event.preventDefault();
         const newTitle = document.getElementById('taskTitle').value;
+        // const newTimeStamp = document.getElementById('fixedDate').textContent;
+        // console.log(newTimeStamp);
         try {
-            await axios.put(`/todo/task/update/${taskId}`, {title: newTitle});
+            await axios.put(`/todo/task/update/${taskId}`, {
+                title: newTitle,
+                timeStamp: new Date(),
+            });
             window.location.href = "index.html";
         } catch (error) {
             console.log(error);
