@@ -4,7 +4,7 @@ I created a simple to-do list to understand APIs using Express.js, Axios, and Mo
 
 There are five functions overall.
 
-#1. Add an Item
+### 1. Add an Item
    
    As long as you put your plan into an text and push the button, you will be able to see an updated to-do list soon. You can try it again and again.
    
