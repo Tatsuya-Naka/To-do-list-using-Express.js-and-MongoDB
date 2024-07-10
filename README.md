@@ -8,3 +8,7 @@ There are 6 functions overall.
    
 https://github.com/Tatsuya-Naka/To-do-list-using-Express.js-and-MongoDB/assets/149978327/208c5694-f39a-4541-823a-c091865d96bf
 
+2. Check items to show a finish sign
+   Once you completed your task, you can put a check sign into a check-box and that will make you focus on the next task because each completed task will become more noticeable than its default.
+   
+   https://github.com/Tatsuya-Naka/To-do-list-using-Express.js-and-MongoDB/assets/149978327/ac9c234c-a851-42a1-8fd5-767f8ae989c1
