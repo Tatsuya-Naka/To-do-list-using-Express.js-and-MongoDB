@@ -106,6 +106,25 @@ app.put("/todo/task/update/:id", async(req, res) => {
     }
 });
 
+// check 
+app.put("/todo/task/check/:id", async(req, res) => {
+    try {
+        const {id} = req.params;
+        const {check} = req.body;
+
+        const updatedStatus = await toDo.findByIdAndUpdate(id, {
+            check: check,
+        }, {new: true});
+        if (!updatedStatus) {
+            return res.status(400).json({error: "Title not found"});
+        }
+        res.status(200).json(updatedStatus);
+        console.log("Successfully updated this item to MongoDB!", updatedStatus);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 app.listen(PORT, () => {
     console.log("Successfully connected to your server!");
 });

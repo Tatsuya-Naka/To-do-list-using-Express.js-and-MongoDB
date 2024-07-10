@@ -24,6 +24,10 @@ const todoSchema = new mongoose.Schema({
             return moment().tz(timezone).toDate();
         }
     },
+    check: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 module.exports = mongoose.model("ToDoSchema", todoSchema);

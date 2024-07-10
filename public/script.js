@@ -2,6 +2,7 @@ const taskSectionDOM = document.querySelector(".threads");
 const inputTaskDOM = document.getElementById("inputTitle");
 const formDOM = document.querySelector(".form-section");
 let inputTask = "";
+
 // console.log(axios);
 const getAllTask = async() => {
     try {
@@ -10,18 +11,20 @@ const getAllTask = async() => {
         let {data} = allTask;
         
         allTask = data.map((task) => {
-            const {_id, title, timeStamp} = task;
+            const {_id, title, timeStamp, check} = task;
             console.log(title);
             console.log(_id);
             console.log(timeStamp);
+
+            const textDeco = check ? 'text-decoration: line-through;' : '';
+            const changeClassName = check ? 'thread checked' : 'thread';
             return `
-                <div class="thread" data-task-id = "${_id}" value="${title}" data-timestamp="${timeStamp}">
+                <div class="${changeClassName}" data-task-id = "${_id}" value="${title}" data-timestamp="${timeStamp}">
                     <div class="group">
                         <label class="checkbox">
-                            <input type="checkbox" />
-                            <span class="checkmark"></span>
+                            <input type="checkbox" ${check ? 'checked' : ''}/>
                         </label>
-                        <h3>${title}</h3>
+                        <h3><span class="deco" style="${textDeco}">${title}</span></h3>
                     </div>
                     <div class="items">
                         <form class="edit-items">
@@ -100,22 +103,30 @@ const editTask = async(id, title, time) => {
         console.log("Title: ", title);
         console.log("Timestamp: ", time);
 
-        const response = await fetch(`/todo/task/update/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ title, time }),
-        });
-
-        if(!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const updatedTask = await response.json();
-        console.log('Updated Task: ', updatedTask);
         window.location.href = `./edit.html?id=${id}`;
     } catch (error) {
         console.error('Error updating task: ', error);
     }
 };
+
+// check
+taskSectionDOM.addEventListener("change", async(event) => {
+    const checkbox = event.target;
+    if (checkbox.type === "checkbox") {
+        const thread = checkbox.closest(".thread");
+        const taskId = thread.getAttribute("data-task-id");
+        
+        try {
+            await axios.put(`/todo/task/check/${taskId}`, {
+                check: checkbox.checked,
+            });
+            console.log(`Task ${taskId} checkbox updated to ${checkbox.checked}`);
+            getAllTask();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    else {
+        console.log("There are some issues happend right now");
+    }
+});
