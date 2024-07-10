@@ -4,7 +4,7 @@ I created a simple to-do list to understand APIs using Express.js, Axios, and Mo
 
 There are five functions overall.
 
-1. Post an item and show this result
+#1. Add an Item
    
    As long as you put your plan into an text and push the button, you will be able to see an updated to-do list soon. You can try it again and again.
    
@@ -32,7 +32,7 @@ There are five functions overall.
 
 5. Edit your to-do list
 
-   If you make spelling mistakes or just would like to alter your plan, you can do it from an editor icon.
+   If you make spelling mistakes or just would like to alter your plan, you can do it from an editor icon. In addition, you can confirm the last modified date in this editor screen.
 
    
    https://github.com/Tatsuya-Naka/To-do-list-using-Express.js-and-MongoDB/assets/149978327/8bfd61d6-d39c-469e-a141-192c24f39430
